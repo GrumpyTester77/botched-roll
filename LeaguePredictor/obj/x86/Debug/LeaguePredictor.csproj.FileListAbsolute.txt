@@ -1,0 +1,5 @@
+C:\Users\Spike\Desktop\C#Programs\LeaguePredictor\LeaguePredictor\bin\Debug\LeaguePredictor.exe
+C:\Users\Spike\Desktop\C#Programs\LeaguePredictor\LeaguePredictor\bin\Debug\LeaguePredictor.pdb
+C:\Users\Spike\Desktop\C#Programs\LeaguePredictor\LeaguePredictor\obj\x86\Debug\LeaguePredictor.exe
+C:\Users\Spike\Desktop\C#Programs\LeaguePredictor\LeaguePredictor\obj\x86\Debug\LeaguePredictor.pdb
+C:\Users\Spike\Desktop\C#Programs\LeaguePredictor\LeaguePredictor\obj\x86\Debug\LeaguePredictor.csprojResolveAssemblyReference.cache
