@@ -2,3 +2,4 @@ C:\Users\Spike\Desktop\Programming Learning\C#Programs\C#Program\ZipIt\ZipIt\bin
 C:\Users\Spike\Desktop\Programming Learning\C#Programs\C#Program\ZipIt\ZipIt\bin\Debug\ZipIt.pdb
 C:\Users\Spike\Desktop\Programming Learning\C#Programs\C#Program\ZipIt\ZipIt\obj\x86\Debug\ZipIt.exe
 C:\Users\Spike\Desktop\Programming Learning\C#Programs\C#Program\ZipIt\ZipIt\obj\x86\Debug\ZipIt.pdb
+C:\Users\Spike\Desktop\Programming Learning\C#Programs\C#Program\ZipIt\ZipIt\obj\x86\Debug\ZipIt.csprojResolveAssemblyReference.cache
