@@ -5,6 +5,9 @@ using System.Text;
 using System.IO;
 
 
+
+
+
 namespace ZipIt
 {
     class Program
@@ -12,18 +15,23 @@ namespace ZipIt
         static void Main(string[] args)
         {
             //Create a new file
-            string path = @"C:\Users\Spike\Desktop\Programming Learning\C#Programs\C#Program\ZipIt\Test Data\CombinedData.txt";
+            string path;
+            Console.WriteLine("To create the file, Please enter the path and filename: ");
+            path = Console.ReadLine();
+
+            //string path = @"C:\Users\Spike\Desktop\Programming Learning\C#Programs\C#Program\ZipIt\Test Data\CombinedData.txt";
 
             if (File.Exists(path))
             {
                 Console.WriteLine("File already Exists: " + path);
             }
-            else 
+            else
             {
                 FileStream newFile = File.Create(path);
                 Console.WriteLine("File Created: " + path);
-                
+                newFile.Close();
             }
+            
             Console.ReadKey();
 
             //Import Function
@@ -38,10 +46,20 @@ namespace ZipIt
             FileInfo dataOne = new FileInfo(filePathInfoOne);
             var sizeOne = data.Length;
 
-            File.WriteAllText(@"C:\Users\Spike\Desktop\Programming Learning\C#Programs\C#Program\ZipIt\Test Data\CombinedData.txt", content + "\r\n" + "Length of file is: " + size + "\r\n" + contentOne + "\r\n" + "Length of file is: " + size);
-            Console.WriteLine("File copied successfully");
+            File.WriteAllText(path, content + "\r\n" + "Length of file is: " + size + "\r\n" + contentOne + "\r\n" + "Length of file is: " + size);
+            Console.WriteLine("Files copied successfully");
             Console.Read();
             
+
+            //Export Function
+            //Copy data from newly created file out into seperate files
+            File.OpenRead(path);
+            
+            
+            if(path != "Length of file is: " )
+            {
+            
+            }
         }
     }
 }
