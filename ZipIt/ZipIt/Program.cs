@@ -15,51 +15,65 @@ namespace ZipIt
         static void Main(string[] args)
         {
             //Create a new file
-            string path;
+            string importPath;
             Console.WriteLine("To create the file, Please enter the path and filename: ");
-            path = Console.ReadLine();
+            importPath = Console.ReadLine();
 
             //string path = @"C:\Users\Spike\Desktop\Programming Learning\C#Programs\C#Program\ZipIt\Test Data\CombinedData.txt";
 
-            if (File.Exists(path))
+            if (File.Exists(importPath))
             {
-                Console.WriteLine("File already Exists: " + path);
+                Console.WriteLine("File already Exists: " + importPath);
             }
             else
             {
-                FileStream newFile = File.Create(path);
-                Console.WriteLine("File Created: " + path);
+                FileStream newFile = File.Create(importPath);
+                Console.WriteLine("File Created: " + importPath);
                 newFile.Close();
+
+                //Import Function
+                //copy data to newly created file
+                string content = File.ReadAllText("C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\Test Data 1.txt");
+                string filePathInfo = "C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\Test Data 1.txt";
+                FileInfo data = new FileInfo(filePathInfo);
+                var size = data.Length;
+
+                string contentOne = File.ReadAllText("C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\Test Data 2.txt");
+                string filePathInfoOne = "C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\Test Data 2.txt";
+                FileInfo dataOne = new FileInfo(filePathInfoOne);
+                var sizeOne = data.Length;
+
+                File.WriteAllText(importPath, content + "\r\n" + "Length of file is: " + size + "\r\n" + contentOne + "\r\n" + "Length of file is: " + size);
+                Console.WriteLine("Files copied successfully");
+                Console.Read();
+
+                
             }
             
             Console.ReadKey();
 
-            //Import Function
-            //copy data from exixting file to newly created file
-            string content = File.ReadAllText("C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\Test Data 1.txt");
-            string filePathInfo = "C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\Test Data 1.txt";
-            FileInfo data = new FileInfo(filePathInfo);
-            var size = data.Length;
-
-            string contentOne = File.ReadAllText("C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\Test Data 2.txt");
-            string filePathInfoOne = "C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\Test Data 2.txt";
-            FileInfo dataOne = new FileInfo(filePathInfoOne);
-            var sizeOne = data.Length;
-
-            File.WriteAllText(path, content + "\r\n" + "Length of file is: " + size + "\r\n" + contentOne + "\r\n" + "Length of file is: " + size);
-            Console.WriteLine("Files copied successfully");
-            Console.Read();
-            
-
             //Export Function
             //Copy data from newly created file out into seperate files
-            File.OpenRead(path);
-            
-            
-            if(path != "Length of file is: " )
+            string exportPath;
+            Console.WriteLine("Please enter the path and filename of the file you want to export: ");
+            exportPath = Console.ReadLine();
+
+            foreach (var line in File.ReadLines(exportPath))
             {
-            
+                if (line != "Length of file is: ")
+                {
+                    File.Create("C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\new1.txt");
+                    File.AppendText("C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\new1.txt");
+                }
+                else
+                {
+                    File.Create("C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\new2.txt");
+                    File.AppendText("C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\new2.txt");
+                }
             }
+
+            Console.ReadKey();
+            
         }
     }
 }
