@@ -11,24 +11,54 @@ namespace ZipIt
          //Zip Function
             //copy data to newly created file
          public static void zipFile(string importPath){
-            string content = File.ReadAllText("C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\Test Data 1.txt");
-            string filePathInfo = "C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\Test Data 1.txt";
-            FileInfo data = new FileInfo(filePathInfo);
-            string fileName = Path.GetFileName(filePathInfo);
-            int fileNameLength = fileName.Length;
-            var size = data.Length;
 
-            string contentOne = File.ReadAllText("C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\Test Data 2.txt");
-            string filePathInfoOne = "C:\\Users\\Spike\\Desktop\\Programming Learning\\C#Programs\\C#Program\\ZipIt\\Test Data\\Test Data 2.txt";
-            FileInfo dataOne = new FileInfo(filePathInfoOne);
-            string fileNameOne = Path.GetFileName(filePathInfoOne);
-            int fileNameLengthOne = fileName.Length;
-            var sizeOne = data.Length;
+             //string addFile = "yes";
+             string content = null;
+             string filePathInfo = null;
+             string fileName = null;
+             int fileNameLength = 0;
+             long size = 0;
 
-            using (StreamWriter writer = new StreamWriter(importPath))
-            {
-                writer.WriteLine(fileNameLength + " " + fileName + " " + size + "\r\n" + content + "\r\n" + fileNameLength + " " + fileNameOne + " " + size + "\r\n" + contentOne);
-            }
+
+
+            //while (addFile == "yes")
+            //{
+
+                Console.WriteLine("Please enter path of file to zip: ");
+                content = Console.ReadLine();
+                filePathInfo = content;
+                FileInfo data = new FileInfo(filePathInfo);
+                fileName = Path.GetFileName(filePathInfo);
+                fileNameLength = fileName.Length;
+                size = data.Length;
+                try
+                {
+                    BinaryWriter writer = new BinaryWriter(new FileStream(importPath, FileMode.Open));
+
+                    writer.Write(fileNameLength);
+                    writer.Write(fileName);
+                    writer.Write(size);
+                    writer.Write(content);
+                }
+                finally
+                {
+                    BinaryWriter writer = new BinaryWriter(new FileStream(importPath, FileMode.Open));
+                    writer.Close();
+                }
+                      
+                //Console.WriteLine("Do you want to add another file to the zip? please type (yes/no)");
+                //string answer = Console.ReadLine();
+                //answer = addFile;
+
+                //if (addFile == "no")
+                //{
+                //    break;
+                //}
+
+
+
+
+            //}
             
             Console.WriteLine("Files copied successfully");
 
