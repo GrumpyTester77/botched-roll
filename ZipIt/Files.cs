@@ -16,8 +16,7 @@ namespace ZipIt
         Console.WriteLine("To create the file, Please enter the path and filename: ");
         importPath = Console.ReadLine();
 
-        //string path = @"C:\Users\Spike\Desktop\Programming Learning\C#Programs\C#Program\ZipIt\Test Data\CombinedData.txt";
-
+       
             if (File.Exists(importPath))
             {
                 Console.WriteLine("File already Exists: " + importPath);

@@ -21,9 +21,6 @@ namespace ZipIt
 
 
 
-            //while (addFile == "yes")
-            //{
-
                 Console.WriteLine("Please enter path of file to zip: ");
                 content = Console.ReadLine();
                 filePathInfo = content;
@@ -39,6 +36,7 @@ namespace ZipIt
                     writer.Write(fileName);
                     writer.Write(size);
                     writer.Write(content);
+                    writer.Close();
                 }
                 finally
                 {
@@ -46,19 +44,7 @@ namespace ZipIt
                     writer.Close();
                 }
                       
-                //Console.WriteLine("Do you want to add another file to the zip? please type (yes/no)");
-                //string answer = Console.ReadLine();
-                //answer = addFile;
-
-                //if (addFile == "no")
-                //{
-                //    break;
-                //}
-
-
-
-
-            //}
+               
             
             Console.WriteLine("Files copied successfully");
 
