@@ -24,7 +24,7 @@ namespace ZipIt
                 Console.WriteLine("Please enter path of file to zip: ");
                 content = Console.ReadLine();
                 filePathInfo = content;
-                FileInfo data = new FileInfo(filePathInfo);
+                FileInfo data = new FileInfo(filePathInfo);               
                 fileName = Path.GetFileName(filePathInfo);
                 fileNameLength = fileName.Length;
                 size = data.Length;
