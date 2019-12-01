@@ -56,20 +56,23 @@ namespace ZipIt
                     fileWriter.Close();
                 }
 
-                while (fileLength < 0)
-                {
-                    fileReader.Read();
-                }
+                //while (fileLength < 0)
+                //{
+                //    fileReader.Read();
+                //}
 
 
                 //file size of data to append to the new file
                 long size = fileReader.ReadInt32();
                 int Size = Convert.ToInt32(size);
-                byte[] data = new byte[Size];
+                //byte[] data = new byte[Size];
                 //int aByte = fileReader.ReadByte();
-                int readBytes = fileReader.Read(data , 0 , Size);
-                long toRead = Size;
+                //int readBytes = fileReader.Read();
+                int toRead = Size;
                 fileReader.Read();
+
+                try
+                {
 
                 byte[] dataBuffer = new byte[0];
 
@@ -89,19 +92,23 @@ namespace ZipIt
                     }
                     
                     fileReader.Read();
-                    StreamWriter fileWriter = new StreamWriter(fileOutput + fileName);
+
+                    StreamWriter fileWriter = new StreamWriter((fileOutput + fileName), true);
                     fileWriter.Write(dataBuffer);
                     fileWriter.Close();
+                    
+                    
                 }
+                
 
+                
+                }
+                finally
+                    {
+                        Console.WriteLine("File does not exist.");
+                    }
                 Console.ReadKey();
             }
-            else
-            {
-                Console.WriteLine("File does not exist.");
-            }
-
-
         }
     }
 }

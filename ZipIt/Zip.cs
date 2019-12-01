@@ -13,21 +13,25 @@ namespace ZipIt
          public static void zipFile(string importPath){
 
              //string addFile = "yes";
-             string content = null;
+             string pathContent = null;
              string filePathInfo = null;
              string fileName = null;
              int fileNameLength = 0;
              long size = 0;
+             byte[] content = null;
 
 
 
                 Console.WriteLine("Please enter path of file to zip: ");
-                content = Console.ReadLine();
-                filePathInfo = content;
+                pathContent = Console.ReadLine();
+                filePathInfo = pathContent;
                 FileInfo data = new FileInfo(filePathInfo);               
                 fileName = Path.GetFileName(filePathInfo);
                 fileNameLength = fileName.Length;
                 size = data.Length;
+                content = File.ReadAllBytes(pathContent);
+                
+
                 try
                 {
                     BinaryWriter writer = new BinaryWriter(new FileStream(importPath, FileMode.Open));
@@ -35,6 +39,7 @@ namespace ZipIt
                     writer.Write(fileNameLength);
                     writer.Write(fileName);
                     writer.Write(size);
+                    writer.Write(pathContent);
                     writer.Write(content);
                     writer.Close();
                 }
