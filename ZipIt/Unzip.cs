@@ -21,7 +21,7 @@ namespace ZipIt
             fileUnzipLocation = Console.ReadLine();
 
             string fileOutput = fileUnzipLocation;
-            
+
 
 
             if (File.Exists(fileExport))
@@ -29,84 +29,85 @@ namespace ZipIt
 
                 //read the file and get back the filename to create the new file to copy data to.
                 BinaryReader fileReader = new BinaryReader(new FileStream(fileExport, FileMode.Open));
-                
+
                 int fileNameLength = fileReader.ReadInt32();
                 byte[] buffer = new byte[fileNameLength];
                 int singleByte = fileReader.ReadByte();
-                int bytesRead = fileReader.Read(buffer, 0 , fileNameLength);
-                string bytesConverted = Encoding.UTF8.GetString(buffer, 0, fileNameLength); 
+                int bytesRead = fileReader.Read(buffer, 0, fileNameLength);
+                string bytesConverted = Encoding.UTF8.GetString(buffer, 0, fileNameLength);
                 string fileName = bytesConverted;
                 Console.WriteLine(bytesConverted);
                 Console.WriteLine("Filename is:" + fileName);
                 int fileLength = fileReader.ReadInt32();
                 byte[] bufferLength = new byte[fileLength];
-                fileReader.Read();
+
+
+                StreamWriter fileWriter = null;
 
                 try
                 {
-                    
-                    StreamWriter fileWriter = new StreamWriter(fileOutput + fileName);
+
+                    fileWriter = new StreamWriter(fileOutput + fileName);
                     fileWriter.Write(buffer);
                     fileWriter.Close();
                 }
 
-                finally 
+                finally
                 {
-                    StreamWriter fileWriter = new StreamWriter(fileOutput + fileName);
-                    fileWriter.Close();
+                    if (fileWriter != null)
+                        fileWriter.Close();
                 }
-
-                //while (fileLength < 0)
-                //{
-                //    fileReader.Read();
-                //}
-
 
                 //file size of data to append to the new file
+                int aSingleByte = fileReader.ReadByte();
                 long size = fileReader.ReadInt32();
-                int Size = Convert.ToInt32(size);
-                //byte[] data = new byte[Size];
-                //int aByte = fileReader.ReadByte();
-                //int readBytes = fileReader.Read();
+                int Size = Convert.ToInt32(size);             
+                               
                 int toRead = Size;
-                fileReader.Read();
+                
 
+                StreamWriter dataWriter = null;
                 try
                 {
+                    dataWriter = new StreamWriter((fileOutput + fileName), true);
+                    byte[] dataBuffer = new byte[0];
 
-                byte[] dataBuffer = new byte[0];
-
-                while (toRead > 0) 
-                {
-                    
-                    if (toRead > 20) 
+                    while (toRead > 0)
                     {
-                        dataBuffer = new byte [20];
-                        toRead = toRead - 20;
+
+                        if (toRead > 20)
+                        {
+                            dataBuffer = new byte[20];
+                            toRead = toRead - 20;
+
+                        }
+                        else
+                        {
+                            dataBuffer = new byte[toRead];
+                            toRead = 0;
+                        }
+
+                        fileReader.Read(dataBuffer, 0, Size);
+                       
+
+                        dataWriter.Write(dataBuffer);
+
 
                     }
-                    else
-                    {
-                        dataBuffer = new byte [toRead];
-                        toRead = 0;
-                    }
                     
-                    fileReader.Read();
-
-                    StreamWriter fileWriter = new StreamWriter((fileOutput + fileName), true);
-                    fileWriter.Write(dataBuffer);
-                    fileWriter.Close();
-                    
-                    
-                }
-                
-
-                
                 }
                 finally
-                    {
-                        Console.WriteLine("File does not exist.");
-                    }
+                {
+                    fileReader.Close();
+                    if (dataWriter != null)
+                        dataWriter.Close();
+                }
+
+                
+            }
+            else 
+            {
+                Console.WriteLine("File does not exist.");
                 Console.ReadKey();
             }
         }

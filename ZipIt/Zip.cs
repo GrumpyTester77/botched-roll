@@ -12,7 +12,7 @@ namespace ZipIt
             //copy data to newly created file
          public static void zipFile(string importPath){
 
-             //string addFile = "yes";
+             
              string pathContent = null;
              string filePathInfo = null;
              string fileName = null;
@@ -22,43 +22,39 @@ namespace ZipIt
 
 
 
-                Console.WriteLine("Please enter path of file to zip: ");
-                pathContent = Console.ReadLine();
-                filePathInfo = pathContent;
-                FileInfo data = new FileInfo(filePathInfo);               
-                fileName = Path.GetFileName(filePathInfo);
-                fileNameLength = fileName.Length;
-                size = data.Length;
-                content = File.ReadAllBytes(pathContent);
-                
+             Console.WriteLine("Please enter path of file to zip: ");
+             pathContent = Console.ReadLine();
+             filePathInfo = pathContent;
+             FileInfo data = new FileInfo(filePathInfo);               
+             fileName = Path.GetFileName(filePathInfo);
+             fileNameLength = fileName.Length;
+             size = data.Length;
+             content = File.ReadAllBytes(pathContent);
+
+             BinaryWriter writer = null;
 
                 try
                 {
-                    BinaryWriter writer = new BinaryWriter(new FileStream(importPath, FileMode.Open));
-
+                    writer = new BinaryWriter(new FileStream(importPath, FileMode.Open));                  
                     writer.Write(fileNameLength);
                     writer.Write(fileName);
-                    writer.Write(size);
                     writer.Write(pathContent);
+                    writer.Write(size);
                     writer.Write(content);
                     writer.Close();
                 }
                 finally
                 {
-                    BinaryWriter writer = new BinaryWriter(new FileStream(importPath, FileMode.Open));
+                    if(writer != null)
                     writer.Close();
+
+
                 }
-                      
-               
-            
-            Console.WriteLine("Files copied successfully");
+             Console.WriteLine("Files copied successfully");
 
-            Console.Read();
-            Console.ReadKey();
-
-            
+             Console.Read();
+             Console.ReadKey();    
          }
-
          
     }
 }
