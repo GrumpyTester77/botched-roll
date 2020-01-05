@@ -13,14 +13,13 @@ namespace ZipIt
         //Copy data from newly created file out into seperate files.
         public static void unzipFiles()
         {
-            string fileUnzipLocation;
             string fileExport;
             Console.WriteLine("Please enter the path and filename of the file you want to unzip: ");
             fileExport = Console.ReadLine();
             Console.WriteLine("Please enter the path where you want to unzip the files to: ");
-            fileUnzipLocation = Console.ReadLine();
+            string fileOutput = Console.ReadLine();
 
-            string fileOutput = fileUnzipLocation;
+            
 
 
 
@@ -32,7 +31,7 @@ namespace ZipIt
 
                 int fileNameLength = fileReader.ReadInt32();
                 byte[] buffer = new byte[fileNameLength];
-                int singleByte = fileReader.ReadByte();
+                //int singleByte = fileReader.ReadByte();
                 int bytesRead = fileReader.Read(buffer, 0, fileNameLength);
                 string bytesConverted = Encoding.UTF8.GetString(buffer, 0, fileNameLength);
                 string fileName = bytesConverted;
@@ -40,67 +39,50 @@ namespace ZipIt
                 Console.WriteLine("Filename is:" + fileName);
                 int fileLength = fileReader.ReadInt32();
                 byte[] bufferLength = new byte[fileLength];
-
-
-                StreamWriter fileWriter = null;
-
-                try
-                {
-
-                    fileWriter = new StreamWriter(fileOutput + fileName);
-                    fileWriter.Write(buffer);
-                    fileWriter.Close();
-                }
-
-                finally
-                {
-                    if (fileWriter != null)
-                        fileWriter.Close();
-                }
-
-                //file size of data to append to the new file
-                int aSingleByte = fileReader.ReadByte();
-                long size = fileReader.ReadInt32();
-                int Size = Convert.ToInt32(size);             
-                               
-                int toRead = Size;
                 
-
-                StreamWriter dataWriter = null;
+                //Data to append to the new file                
+                int toRead = fileReader.Read();                      
+                                       
+                BinaryWriter dataWriter = null;
                 try
                 {
-                    dataWriter = new StreamWriter((fileOutput + fileName), true);
+                    dataWriter = new BinaryWriter(new FileStream(Path.Combine(fileOutput, fileName), FileMode.Create));
                     byte[] dataBuffer = new byte[0];
-
+                    
+                    
                     while (toRead > 0)
                     {
 
                         if (toRead > 20)
                         {
                             dataBuffer = new byte[20];
+                            
+                            fileReader.Read(dataBuffer, 0, dataBuffer.Length);
+                            dataWriter.Write(dataBuffer);
                             toRead = toRead - 20;
-
                         }
                         else
                         {
                             dataBuffer = new byte[toRead];
+                            
+                            fileReader.Read(dataBuffer, 0, dataBuffer.Length);
+                            dataWriter.Write(dataBuffer);
                             toRead = 0;
                         }
-
-                        fileReader.Read(dataBuffer, 0, Size);
-                       
-
-                        dataWriter.Write(dataBuffer);
-
 
                     }
                     
                 }
                 finally
                 {
-                    fileReader.Close();
+                    if (fileReader != null)
+                    {
+                        fileReader.Close();
+                    }
                     if (dataWriter != null)
+                    {
                         dataWriter.Close();
+                    }
                 }
 
                 
@@ -110,6 +92,8 @@ namespace ZipIt
                 Console.WriteLine("File does not exist.");
                 Console.ReadKey();
             }
+
         }
+
     }
 }
