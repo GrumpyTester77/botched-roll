@@ -19,81 +19,37 @@ namespace ZipIt
             Console.WriteLine("Please enter the path where you want to unzip the files to: ");
             string fileOutput = Console.ReadLine();
 
-            
-
-
-
-            if (File.Exists(fileExport))
-            {
-
-                //read the file and get back the filename to create the new file to copy data to.
-                BinaryReader fileReader = new BinaryReader(new FileStream(fileExport, FileMode.Open));
-
-                int fileNameLength = fileReader.ReadInt32();
-                byte[] buffer = new byte[fileNameLength];
-                //int singleByte = fileReader.ReadByte();
-                int bytesRead = fileReader.Read(buffer, 0, fileNameLength);
-                string bytesConverted = Encoding.UTF8.GetString(buffer, 0, fileNameLength);
-                string fileName = bytesConverted;
-                Console.WriteLine(bytesConverted);
-                Console.WriteLine("Filename is:" + fileName);
-                int fileLength = fileReader.ReadInt32();
-                byte[] bufferLength = new byte[fileLength];
-                
-                //Data to append to the new file                
-                int toRead = fileReader.Read();                      
-                                       
-                BinaryWriter dataWriter = null;
-                try
+                if (File.Exists(fileExport))
                 {
-                    dataWriter = new BinaryWriter(new FileStream(Path.Combine(fileOutput, fileName), FileMode.Create));
-                    byte[] dataBuffer = new byte[0];
-                    
-                    
-                    while (toRead > 0)
+                    //read the file and get back the filename to create the new file to copy data to.
+                    BinaryReader fileReader = new BinaryReader(new FileStream(fileExport, FileMode.Open));
+
+                    int fileNameLength = fileReader.ReadInt32();
+                    byte[] buffer = fileReader.ReadBytes(fileNameLength);
+                    string fileName = Encoding.UTF8.GetString(buffer);
+                    Console.WriteLine("Filename is:" + fileName);
+
+                    long toRead = fileReader.ReadInt64();
+                    Console.WriteLine("Filelength is:" + toRead);
+                    string filePath = fileOutput + fileName;
+
+                    fileUtils.appendToFile(fileReader, filePath, toRead);
+
                     {
-
-                        if (toRead > 20)
-                        {
-                            dataBuffer = new byte[20];
-                            
-                            fileReader.Read(dataBuffer, 0, dataBuffer.Length);
-                            dataWriter.Write(dataBuffer);
-                            toRead = toRead - 20;
-                        }
-                        else
-                        {
-                            dataBuffer = new byte[toRead];
-                            
-                            fileReader.Read(dataBuffer, 0, dataBuffer.Length);
-                            dataWriter.Write(dataBuffer);
-                            toRead = 0;
-                        }
-
-                    }
-                    
-                }
-                finally
-                {
                     if (fileReader != null)
                     {
-                        fileReader.Close();
+                        fileReader.Close(); 
                     }
-                    if (dataWriter != null)
-                    {
-                        dataWriter.Close();
-                    }
+                    
                 }
 
-                
-            }
-            else 
-            {
-                Console.WriteLine("File does not exist.");
-                Console.ReadKey();
-            }
-
-        }
-
-    }
+                }
+                else
+                {
+                    Console.WriteLine("File does not exist.");
+                    Console.ReadKey();
+                }
+           }
+      }
 }
+    
