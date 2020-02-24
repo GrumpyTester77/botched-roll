@@ -27,7 +27,7 @@ namespace ZipIt
             if (result == 1)
             {
                 importPath = Files.createFiles();
-                Zip.zipFile(importPath);
+                Zip.zipFiles(importPath);
 
             }
 
