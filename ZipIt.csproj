@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compression.cs" />
+    <Compile Include="directoryUtil.cs" />
     <Compile Include="Files.cs" />
     <Compile Include="fileUtils.cs" />
     <Compile Include="Unzip.cs" />

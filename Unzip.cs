@@ -24,14 +24,21 @@ namespace ZipIt
                 if (File.Exists(filePath))
                 {
                     //read the file and get back the filename to create the new file to copy data to.
+                    byte position;
                     BinaryReader fileReader = new BinaryReader(new FileStream(filePath, FileMode.Open));
+                    while ((position = fileReader.ReadByte()) != 0)
+                    {
 
-                    int fileNameLength = fileReader.ReadInt32();
-                    byte[] buffer = fileReader.ReadBytes(fileNameLength);
-                    string fileName = Encoding.UTF8.GetString(buffer);
-                    string fileOutputPath = fileOutput + fileName;
+                        int fileNameLength = fileReader.ReadInt32();
+                        byte[] buffer = fileReader.ReadBytes(fileNameLength);
+                        string fileName = Encoding.UTF8.GetString(buffer);
+                        string fileOutputPath = fileOutput + fileName;
 
-                    zipFile.extractFile(filePath, file, fileOutputPath, fileReader);
+                        zipFile.extractFile(filePath, file, fileOutputPath, fileReader);
+
+                        
+                    }
+                    
 
                     {
                     if (fileReader != null)
