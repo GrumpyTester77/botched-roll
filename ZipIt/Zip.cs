@@ -10,24 +10,19 @@ namespace ZipIt
     {
          //Zip Function
             //copy data to newly created file
-         public static void zipFiles(string importPath){
+         public static void zipFiles(string importPath)
+         {
 
              //Getting the path and file
-             Console.WriteLine("Please enter path of file to zip: ");
-             string filePath = Console.ReadLine();
-             string file = Path.GetFileName(filePath);
-                                                 
-             //copy the contents of the file to the new file
-             BinaryReader fileReader = new BinaryReader(new FileStream(filePath, FileMode.Open));
-             BinaryWriter dataWriter = new BinaryWriter(new FileStream(importPath, FileMode.Append));
+             Console.WriteLine("Please enter path of directory or file to zip: ");
+             string zipPath = Console.ReadLine();
+             DirectoryUtil.directoryCreateListOfFiles(zipPath, importPath);
 
-             zipFile.importFile(filePath, file, dataWriter, fileReader);
 
-             Console.WriteLine("Files copied successfully");
 
-             Console.Read();
-             Console.ReadKey();    
-         }
-         
-    }
+
+                 Console.WriteLine("Files copied successfully");
+                 Console.ReadKey();
+             }
+         } 
 }
