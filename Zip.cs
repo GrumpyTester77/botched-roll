@@ -16,14 +16,12 @@ namespace ZipIt
              //Getting the path and file
              Console.WriteLine("Please enter path of directory or file to zip: ");
              string zipPath = Console.ReadLine();
-             directoryUtil.directoryCreateListOfFiles(zipPath, importPath);
+             DirectoryUtil.directoryCreateListOfFiles(zipPath, importPath);
 
 
 
 
                  Console.WriteLine("Files copied successfully");
-
-                 Console.Read();
                  Console.ReadKey();
              }
          } 

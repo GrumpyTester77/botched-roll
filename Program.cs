@@ -14,36 +14,12 @@ namespace ZipIt
     {
         static void Main(string[] args)
         {
-           
-            string importPath = "null";
-            string inputKey = "";
-
-            Console.WriteLine("Please select from the following options", "\n");
-            Console.WriteLine("Option 1, Zip file(s)","\n");
-            Console.WriteLine("Option 2, Unzip file(s)","\n");
-            inputKey = Console.ReadLine();
-            int result = Int32.Parse(inputKey);
-
-            if (result == 1)
+            int userInput = 0;
+            do
             {
-                importPath = Files.createFiles();
-                Zip.zipFiles(importPath);
-
+                Menu.mainMenu();
             }
-
-            else if (result == 2)
-            {
-                Unzip.unzipFiles();
-            }
-
-            else 
-            {
-                Console.WriteLine("invalid option");
-                Console.Read();
-               
-            }     
-            
+            while (userInput != 3);
         }
-
-    }
+     }
 }
